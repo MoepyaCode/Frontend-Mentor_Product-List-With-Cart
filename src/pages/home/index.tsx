@@ -2,7 +2,6 @@ import { useEffect, useState } from "react"
 import { Wrapper, Container, Heading, Main } from "@app-components"
 import { ProductContainer, CardContainer } from "./components"
 
-
 export type Image = {
   desktop: string,
   mobile: string,
@@ -32,8 +31,8 @@ export default function Home() {
   }, [products])
 
   return (
-    <Main className="bg-[#FCF8F6] p-[24px]">
-      <Container className="flex flex-col gap-[32px]">
+    <Main className="bg-[#FCF8F6] p-[24px] md:p-[40px] xl:px-[112px] xl:py-[88px] 2xl:grid 2xl:place-items-center">
+      <Container className="flex flex-col xl:flex-row gap-[32px] xl:justify-between max-w-[1216px]">
         {/* #1 */}
         <Wrapper className="flex flex-col gap-[32px]">
           <Heading className="font-bold text-[#260F08] text-[40px] leading-[120%]">Desserts</Heading>

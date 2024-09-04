@@ -10,7 +10,7 @@ type Props = {
 export default function ProductContainer(props: Props) {
     console.log('ProductContainer', props.products)
   return (
-    <Wrapper className='flex flex-wrap gap-[24px]'>
+    <Wrapper className='flex flex-wrap gap-[24px] justify-center md:justify-between'>
         {props.products?.map((product, index) => <ProductCard key={index} product={product} />)}
     </Wrapper>
   )

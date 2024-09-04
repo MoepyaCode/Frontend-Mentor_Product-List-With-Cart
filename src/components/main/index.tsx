@@ -7,7 +7,7 @@ type Props = {
 
 export default function Main(props: Props) {
     return (
-        <main className={`min-h-screen ${props.className}`}>
+        <main className={`font-red-hat-text min-h-screen ${props.className}`}>
             {props.children}
         </main>
     )

@@ -1,34 +1,26 @@
-import { useEffect, useState } from "react"
-import { Wrapper, Container, Heading, Main } from "@app-components"
+import { useEffect } from "react"
 import { ProductContainer, CardContainer } from "./components"
-
-export type Image = {
-  desktop: string,
-  mobile: string,
-  tablet: string,
-  thumbnail: string,
-}
-
-export type Product = {
-  category: string,
-  image: Image,
-  name: string,
-  price: number,
-}
+import { Wrapper, Container, Heading, Main } from "@app-components"
+import { useAppDispatch, useAppSelector } from "@app-hooks"
+import { setProducts } from "@app-store-features"
+import { getProducts } from "@app-utils"
 
 export default function Home() {
-  const [products, setProducts] = useState<Product[] | null>(null)
-
+  const dispatch = useAppDispatch()
+  const products = useAppSelector(state => state.products.products)
+  
   useEffect(() => {
-    console.log('products', products)
-    if (!products) {
-      fetch('/src/utils/data.json')
-        .then((response) => response.json())
-        .then((data) => {
-          setProducts(data)
-        })
+    
+    async function initProducts() {
+      const products = await getProducts()
+      dispatch(setProducts(products))
     }
-  }, [products])
+    if (!products) {
+      initProducts()
+      .then(() => console.log('Products Loaded Successfully'))
+      .catch((error) => console.error((error as Error).message))
+    }
+  }, [products, dispatch])
 
   return (
     <Main className="bg-[#FCF8F6] p-[24px] md:p-[40px] xl:px-[112px] xl:py-[88px] 2xl:grid 2xl:place-items-center">

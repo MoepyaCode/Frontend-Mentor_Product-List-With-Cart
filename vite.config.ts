@@ -16,6 +16,12 @@ export default defineConfig({
       '@app-components/*': resolve(root, 'components/*'),
       '@app-assets': resolve(root, 'assets'),
       '@app-assets/*': resolve(root, 'assets/*'),
+      '@app-hooks': resolve(root, 'hooks'),
+      '@app-hooks/*': resolve(root, 'hooks/*'),
+      '@app-store-features': resolve(root, 'store/features'),
+      '@app-store-features/*': resolve(root, 'store/features/*'),
+      '@app-utils': resolve(root, 'utils'),
+      '@app-utils/*': resolve(root, 'utils/*'),
     },
   },
   test: {

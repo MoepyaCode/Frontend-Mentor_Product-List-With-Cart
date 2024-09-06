@@ -23,6 +23,12 @@
       "@app-components/*": ["src/components/*"],
       "@app-assets": ["src/assets"],
       "@app-assets/*": ["src/assets/*"],
+      "@app-hooks": ["src/hooks"],
+      "@app-hooks/*": ["src/hooks/*"],
+      "@app-store-features": ["src/store/features"],
+      "@app-store-features/*": ["src/store/features/*"],
+      "@app-utils": ["src/utils"],
+      "@app-utils/*": ["src/utils//*"],
     },
 
     /* Linting */

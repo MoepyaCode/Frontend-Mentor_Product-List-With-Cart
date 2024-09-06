@@ -1,17 +1,20 @@
-import React from 'react'
 import { Wrapper } from '@app-components'
-import { Product } from '../..'
 import ProductCard from '../product-card'
 
-type Props = {
+interface Props {
     products: Product[] | null
 }
 
 export default function ProductContainer(props: Props) {
-    console.log('ProductContainer', props.products)
-  return (
-    <Wrapper className='flex flex-wrap gap-[24px] justify-center md:justify-between'>
-        {props.products?.map((product, index) => <ProductCard key={index} product={product} />)}
-    </Wrapper>
-  )
+
+    return (
+        <Wrapper className='flex flex-wrap gap-[24px] justify-center md:justify-between'>
+            {props.products?.map((product, index) => (
+                <ProductCard
+                    key={index}
+                    product={product}
+                />
+            ))}
+        </Wrapper>
+    )
 }

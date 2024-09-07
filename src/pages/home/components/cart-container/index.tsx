@@ -1,14 +1,21 @@
+import React from 'react'
 import { Wrapper } from '@app-components'
+
 import illustrationEmptyCartIcon from '@app-assets/icons/illustration-empty-cart.svg'
 import carbonNeutralIcon from '@app-assets/icons/icon-carbon-neutral.svg'
-import React from 'react'
+
 import { useAppDispatch, useAppSelector } from '@app-hooks'
+
 import RemoveButton from './removeButton'
+
 import { resetProductQuantity } from '@app-store-features/products'
+import ModalContent from '../modal-content'
+
 
 export default function CartContainer() {
     const dispatch = useAppDispatch()
     const cart = useAppSelector(state => state.cart)
+    const modalRef = React.useRef<HTMLDialogElement>(null)
 
     function renderEmptyCartContent() {
         return (
@@ -20,7 +27,7 @@ export default function CartContainer() {
         )
     }
 
-    function cartItem(product: Product, index: number) {
+    function renderCartItem(product: Product, index: number) {
         const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
             event.stopPropagation()
             dispatch(resetProductQuantity(product.id))
@@ -47,8 +54,35 @@ export default function CartContainer() {
     function renderCartItems() {
         return (
             <Wrapper>
-                {cart.products.map(cartItem)}
+                {cart.products.map(renderCartItem)}
             </Wrapper>
+        )
+    }
+
+    function openModal() {
+        modalRef.current?.showModal()
+    }
+
+    function closeModal() {
+        modalRef.current?.close()
+    }
+
+    function renderConfirmOrderButton() {
+
+        return (
+            <button
+                onClick={openModal}
+                className='relative grid place-items-center bg-[#C73B0F] before:absolute before:w-full before:h-full before:bg-transparent hover:before:bg-[rgba(0,0,0,.25)] font-semibold text-white min-h-[53px] rounded-full overflow-hidden before:transition-colors before:duration-300 before:ease-out'>
+                <span className='z-[1]'>Confirm Order</span>
+            </button>
+        )
+    }
+
+    function renderModal() {
+        return (
+            <dialog className='w-full max-w-[592px] rounded-t-xl md:rounded-[12px]' ref={modalRef}>
+                <ModalContent order={cart} closeModal={closeModal} />
+            </dialog>
         )
     }
 
@@ -73,9 +107,7 @@ export default function CartContainer() {
                     </span>
                 </Wrapper>
 
-                <button className='relative grid place-items-center bg-[#C73B0F] before:absolute before:w-full before:h-full before:bg-transparent hover:before:bg-[rgba(0,0,0,.25)] font-semibold text-white min-h-[53px] rounded-full overflow-hidden before:transition-colors before:duration-300 before:ease-out'>
-                    <span className='z-[1]'>Confirm Order</span>
-                </button>
+                {renderConfirmOrderButton()}
             </React.Fragment>
         )
     }
@@ -85,6 +117,8 @@ export default function CartContainer() {
             <h2 className="font-bold text-[#C73B0F] text-[24px]">Your Cart ({cart.products.length})</h2>
 
             {renderContent()}
+
+            {renderModal()}
         </Wrapper>
     )
 }

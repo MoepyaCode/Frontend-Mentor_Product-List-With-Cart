@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { ProductContainer, CardContainer } from "./components"
+import { ProductContainer, CartContainer } from "./components"
 import { Wrapper, Container, Heading, Main } from "@app-components"
 import { useAppDispatch, useAppSelector } from "@app-hooks"
 import { setProducts } from "@app-store-features/products"
@@ -39,7 +39,7 @@ export default function Home() {
         </Wrapper>
 
         {/* #2 */}
-        <CardContainer />
+        <CartContainer />
       </Container>
     </Main>
   )

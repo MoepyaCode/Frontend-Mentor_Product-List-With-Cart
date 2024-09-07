@@ -9,6 +9,7 @@ export async function getProducts() {
             id: index,
             price: parseFloat(product.price).toFixed(2),
             quantity: 0,
+            total: '0.00'
         }))
         return products
     } catch (error) {

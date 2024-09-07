@@ -1,4 +1,4 @@
-import CardContainer from "./cart-container";
+import CartContainer from "./cart-container";
 import ProductContainer from "./products-container";
 
-export { CardContainer, ProductContainer };
+export { CartContainer as CardContainer, ProductContainer };

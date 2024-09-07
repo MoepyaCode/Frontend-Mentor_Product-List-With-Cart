@@ -12,6 +12,7 @@ declare interface Product {
     name: string
     price: string
     quantity: number
+    total: string
 }
 
 declare interface ProductsState {

@@ -1,3 +1,4 @@
+import { getTotalPrice } from "@app-hooks"
 import { createSlice } from "@reduxjs/toolkit"
 import { PayloadAction } from "@reduxjs/toolkit"
 
@@ -12,28 +13,25 @@ const productsSlice = createSlice({
         setProducts(state, action: PayloadAction<Product[] | null>) {
             state.products = action.payload
         },
-        addProductToCart(state, action: PayloadAction<number>) {
-            const product = state.products?.find((product) => product.id === action.payload)
-            if (product) {
-                product.quantity += 1
-            }
-        },
-        removeProductFromCart(state, action: PayloadAction<number>) {
+        resetProductQuantity(state, action: PayloadAction<number>) {
             const product = state.products?.find((product) => product.id === action.payload)
             if (product) {
                 product.quantity = 0
+                product.total = '0.00'
             }
         },
         incrementProductQuantity(state, action: PayloadAction<number>) {
             const product = state.products?.find((product) => product.id === action.payload)
             if (product) {
                 product.quantity += 1
+                product.total = getTotalPrice(product.quantity, product.price)
             }
         },
         decrementProductQuantity(state, action: PayloadAction<number>) {
             const product = state.products?.find((product) => product.id === action.payload)
             if (product) {
                 product.quantity -= 1
+                product.total = getTotalPrice(product.quantity, product.price)
             }
         },
     },
@@ -41,8 +39,7 @@ const productsSlice = createSlice({
 
 export const { 
     setProducts, 
-    addProductToCart, 
-    removeProductFromCart, 
+    resetProductQuantity,
     incrementProductQuantity, 
     decrementProductQuantity 
 } = productsSlice.actions

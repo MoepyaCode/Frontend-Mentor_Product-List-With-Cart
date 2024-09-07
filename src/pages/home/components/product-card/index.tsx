@@ -2,9 +2,10 @@ import React from 'react'
 import { Wrapper } from '@app-components'
 import iconAddToCart from '@app-assets/icons/icon-add-to-cart.svg'
 import { useAppDispatch } from '@app-hooks'
-import { addProductToCart, decrementProductQuantity, incrementProductQuantity } from '@app-store-features'
+import { decrementProductQuantity, incrementProductQuantity } from '@app-store-features/products'
 import DecrementButton from './decrementButton'
 import IncrementButton from './incrementButton'
+import { addProductToCart } from '@app-store-features/cart'
 
 
 type Props = {
@@ -26,7 +27,7 @@ export default function ProductCard(props: Props) {
   }
 
   function addToCart() {
-    dispatch(addProductToCart(props.product.id))
+    dispatch(incrementProductQuantity(props.product.id))
   }
 
   function incremenetQuantity(event: React.MouseEvent<HTMLButtonElement>) {
@@ -41,7 +42,6 @@ export default function ProductCard(props: Props) {
 
   function buttonsRender() {
     if (props.product.quantity > 0) {
-      console.log(props.product)
       return (
         <div className='absolute bottom-[-22px] w-full max-w-[160px] max-h-[44px] bg-[#C73B0F] text-white p-[12px] z-[1] rounded-full flex flex-nowrap justify-between items-center gap-2 border border-[#C73B0F] transition-colors duration-300 ease-out'>
           <DecrementButton handleClick={decrementQuantity} />

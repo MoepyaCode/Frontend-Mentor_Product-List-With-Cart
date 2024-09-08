@@ -5,7 +5,6 @@ import { useAppDispatch } from '@app-hooks'
 import { decrementProductQuantity, incrementProductQuantity } from '@app-store-features/products'
 import DecrementButton from './decrementButton'
 import IncrementButton from './incrementButton'
-import { addProductToCart } from '@app-store-features/cart'
 
 
 type Props = {

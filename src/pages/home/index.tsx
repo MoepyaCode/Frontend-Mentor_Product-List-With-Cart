@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { ProductContainer, CartContainer } from "./components"
 import { Wrapper, Container, Heading, Main } from "@app-components"
 import { useAppDispatch, useAppSelector } from "@app-hooks"
@@ -12,20 +12,21 @@ export default function Home() {
   const products = useAppSelector(state => state.products.products)
 
   useEffect(() => {
-    async function initProducts() {
-      const products = await getProducts()
-      dispatch(setProducts(products))
-    }
     if (!products) {
-      initProducts()
-      .then(() => console.log('Products Loaded Successfully'))
-      .catch((error) => console.error((error as Error).message))
+      getProducts()
+        .then((products) => {
+          dispatch(setProducts(products))
+          return 'Products fetched successfully'
+        })
+        .then((message) => console.log(message))
+        .catch((error) => console.error((error as Error).message))
     }
   }, [products, dispatch])
 
   useEffect(() => {
-    if(products) {
-      dispatch(updateProductsInCart(getUpdatedCartProducts(products)))
+    if (products) {
+      const cart = getUpdatedCartProducts(products)
+      dispatch(updateProductsInCart(cart))
     }
   }, [products])
 

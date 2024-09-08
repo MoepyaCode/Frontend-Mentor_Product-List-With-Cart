@@ -1,17 +1,19 @@
+import axios from "axios"
 
-export async function getProducts() {
+export async function getProducts(): Promise<Product[] | null> {
     try {
-        const src = '/src/utils/data.json'
-        const response = await fetch(src)
-        const data: Product[] = await response.json()
-        const products = data.map((product, index) => ({
-            ...product,
-            id: index,
-            price: parseFloat(product.price).toFixed(2),
-            quantity: 0,
-            total: '0.00'
-        }))
-        return products
+        const src = '/data/data.json'
+        let products = await axios.get(src)
+        const productsModified = products.data.map((product: Product, index: number) => {
+            return {
+                ...product,
+                id: index,
+                price: parseFloat(product.price).toFixed(2),
+                quantity: 0,
+                total: '0.00'
+            }
+        })
+        return productsModified
     } catch (error) {
         console.error((error as Error).message)
         return null

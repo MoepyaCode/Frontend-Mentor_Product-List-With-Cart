@@ -6,17 +6,21 @@ import { decrementProductQuantity, incrementProductQuantity } from '@app-store-f
 import DecrementButton from './decrementButton'
 import IncrementButton from './incrementButton'
 
-
 type Props = {
   product: Product
 }
 
 export default function ProductCard(props: Props) {
   const dispatch = useAppDispatch()
+  const imageWrapperRef = React.useRef<HTMLDivElement>(null)
+  const imageRef = React.useRef<HTMLImageElement>(null)
 
-  function imageRender() {
+  function imageRender(thumbnail?: string) {
     const image = props.product.image
-    if (window.innerWidth < 768) {
+
+    if (thumbnail) {
+      return thumbnail
+    } else if (window.innerWidth < 768) {
       return image.mobile
     } else if (window.innerWidth < 1280) {
       return image.tablet
@@ -36,7 +40,7 @@ export default function ProductCard(props: Props) {
 
   function decrementQuantity(event: React.MouseEvent<HTMLButtonElement>) {
     event.stopPropagation()
-    dispatch(decrementProductQuantity(props.product.id)) 
+    dispatch(decrementProductQuantity(props.product.id))
   }
 
   function buttonsRender() {
@@ -58,12 +62,23 @@ export default function ProductCard(props: Props) {
     )
   }
 
+  function ImageWrapperStyles(): React.CSSProperties {
+    return imageRef.current?.complete ? {} : {
+      width: '100%',
+      height: '100%',
+      backgroundImage: `url(${imageRender(props.product.image.thumbnail)})`,
+      backgroundRepeat: 'no-repeat',
+      backgroundSize: '100% 100%',
+      backgroundPosition: 'center',
+    }
+  }
+
   return (
     <Wrapper className='flex flex-col flex-nowrap gap-[38px] md:max-w-[213.33px] md:min-h-[212px] xl:max-w-[250.67px]'>
       {/* #1 */}
       <div className='relative flex flex-col items-center'>
-        <div className='max-w-[327px] md:min-h-[212px] xl:min-h-[240px] overflow-hidden rounded-[8px]'>
-          <img className='object-fill md:object-cover hover:scale-105 transition-transform duration-300 ease-out h-full' src={imageRender()} alt={props.product.name} />
+        <div style={ImageWrapperStyles()} ref={imageWrapperRef} className='max-w-[327px] md:min-w-[213.33px] xl:min-w-[250.67px] md:min-h-[212px] xl:min-h-[240px] overflow-hidden rounded-[8px]'>
+          <img ref={imageRef} loading='lazy' className='object-fill md:object-cover hover:scale-105 transition-transform duration-300 ease-out h-full' src={imageRender()} alt={props.product.name} />
         </div>
         {buttonsRender()}
       </div>

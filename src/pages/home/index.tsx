@@ -11,6 +11,10 @@ export default function Home() {
   const dispatch = useAppDispatch()
   const products = useAppSelector(state => state.products.products)
 
+
+  /**
+   * Fetch products from the data.json file
+   */
   useEffect(() => {
     if (!products) {
       getProducts()
@@ -23,6 +27,9 @@ export default function Home() {
     }
   }, [products, dispatch])
 
+  /**
+   * Update the cart products when the products state changes
+   */
   useEffect(() => {
     if (products) {
       const cart = getUpdatedCartProducts(products)

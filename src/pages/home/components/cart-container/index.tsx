@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Wrapper } from '@app-components'
 
 import illustrationEmptyCartIcon from '@app-assets/icons/illustration-empty-cart.svg'

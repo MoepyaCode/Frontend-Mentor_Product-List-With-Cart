@@ -35,7 +35,7 @@ export default function Home() {
       const cart = getUpdatedCartProducts(products)
       dispatch(updateProductsInCart(cart))
     }
-  }, [products])
+  }, [products, dispatch])
 
   return (
     <Main className="bg-[#FCF8F6] p-[24px] md:p-[40px] xl:px-[112px] xl:py-[88px] 2xl:grid 2xl:place-items-center">

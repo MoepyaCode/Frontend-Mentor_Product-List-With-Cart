@@ -3,7 +3,7 @@ import axios from "axios"
 export async function getProducts(): Promise<Product[] | null> {
     try {
         const src = '/data/data.json'
-        let products = await axios.get(src)
+        const products = await axios.get(src)
         const productsModified = products.data.map((product: Product, index: number) => {
             return {
                 ...product,

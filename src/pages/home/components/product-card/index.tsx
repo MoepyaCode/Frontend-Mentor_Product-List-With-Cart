@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Wrapper } from '@app-components'
 import iconAddToCart from '@app-assets/icons/icon-add-to-cart.svg'
 import { useAppDispatch } from '@app-hooks'
@@ -14,15 +14,24 @@ export default function ProductCard(props: Props) {
   const dispatch = useAppDispatch()
   const imageWrapperRef = React.useRef<HTMLDivElement>(null)
   const imageRef = React.useRef<HTMLImageElement>(null)
+  const [windowWidth, setWindowWidth] = React.useState<number>(window.innerWidth)
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowWidth(window.innerWidth)
+    }
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [windowWidth])
 
   function imageRender(thumbnail?: string) {
     const image = props.product.image
 
     if (thumbnail) {
       return thumbnail
-    } else if (window.innerWidth < 768) {
+    } else if (windowWidth < 768) {
       return image.mobile
-    } else if (window.innerWidth < 1280) {
+    } else if (windowWidth < 1280) {
       return image.tablet
     } else {
       return image.desktop
@@ -47,9 +56,9 @@ export default function ProductCard(props: Props) {
     if (props.product.quantity > 0) {
       return (
         <div className='absolute bottom-[-22px] w-full max-w-[160px] max-h-[44px] bg-[#C73B0F] text-white p-[12px] z-[1] rounded-full flex flex-nowrap justify-between items-center gap-2 border border-[#C73B0F] transition-colors duration-300 ease-out'>
-          <DecrementButton handleClick={decrementQuantity} />
+          <DecrementButton windowWidth={windowWidth} handleClick={decrementQuantity} />
           <span>{props.product.quantity}</span>
-          <IncrementButton handleClick={incremenetQuantity} />
+          <IncrementButton windowWidth={windowWidth} handleClick={incremenetQuantity} />
         </div>
       )
     }

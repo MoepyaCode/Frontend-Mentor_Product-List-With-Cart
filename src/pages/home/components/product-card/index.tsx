@@ -39,13 +39,11 @@ export default function ProductCard(props: Props) {
     dispatch(incrementProductQuantity(props.product.id))
   }
 
-  function incremenetQuantity(event: React.MouseEvent<HTMLButtonElement>) {
-    event.stopPropagation()
+  function incremenetQuantity() {
     dispatch(incrementProductQuantity(props.product.id))
   }
 
-  function decrementQuantity(event: React.MouseEvent<HTMLButtonElement>) {
-    event.stopPropagation()
+  function decrementQuantity() {
     dispatch(decrementProductQuantity(props.product.id))
   }
 

@@ -11,7 +11,6 @@ export default function Home() {
   const dispatch = useAppDispatch()
   const products = useAppSelector(state => state.products.products)
 
-
   /**
    * Fetch products from the data.json file
    */
@@ -43,7 +42,7 @@ export default function Home() {
         {/* #1 */}
         <Wrapper className="flex flex-col gap-[32px]">
           <Heading className="font-bold text-[#260F08] text-[40px] leading-[120%]">Desserts</Heading>
-          <ProductContainer products={products} />
+          <ProductContainer />
         </Wrapper>
 
         {/* #2 */}

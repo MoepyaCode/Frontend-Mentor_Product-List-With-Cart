@@ -1,15 +1,13 @@
 import { Wrapper } from '@app-components'
 import ProductCard from '../product-card'
+import { useAppSelector } from '@app-hooks'
 
-interface Props {
-    products: Product[] | null
-}
-
-export default function ProductContainer(props: Props) {
+export default function ProductContainer() {
+    const products = useAppSelector(state => state.products.products)
 
     return (
         <Wrapper className='flex flex-wrap gap-[24px] justify-center md:justify-between'>
-            {props.products?.map((product, index) => (
+            {products?.map((product, index) => (
                 <ProductCard
                     key={index}
                     product={product}

@@ -12,7 +12,6 @@ type Props = {
 
 export default function ProductCard(props: Props) {
   const dispatch = useAppDispatch()
-  const imageWrapperRef = React.useRef<HTMLDivElement>(null)
   const imageRef = React.useRef<HTMLImageElement>(null)
   const [windowWidth, setWindowWidth] = React.useState<number>(window.innerWidth)
 
@@ -24,12 +23,10 @@ export default function ProductCard(props: Props) {
     return () => window.removeEventListener('resize', handleResize)
   }, [windowWidth])
 
-  function imageRender(thumbnail?: string) {
+  function imageRender() {
     const image = props.product.image
 
-    if (thumbnail) {
-      return thumbnail
-    } else if (windowWidth < 768) {
+    if (windowWidth < 768) {
       return image.mobile
     } else if (windowWidth < 1280) {
       return image.tablet
@@ -71,22 +68,11 @@ export default function ProductCard(props: Props) {
     )
   }
 
-  function ImageWrapperStyles(): React.CSSProperties {
-    return imageRef.current?.complete ? {} : {
-      width: '100%',
-      height: '100%',
-      backgroundImage: `url(${imageRender(props.product.image.thumbnail)})`,
-      backgroundRepeat: 'no-repeat',
-      backgroundSize: '100% 100%',
-      backgroundPosition: 'center',
-    }
-  }
-
   return (
     <Wrapper className='flex flex-col flex-nowrap gap-[38px] md:max-w-[213.33px] md:min-h-[212px] xl:max-w-[250.67px]'>
       {/* #1 */}
       <div className='relative flex flex-col items-center'>
-        <div style={ImageWrapperStyles()} ref={imageWrapperRef} className='max-w-[327px] md:min-w-[213.33px] xl:min-w-[250.67px] md:min-h-[212px] xl:min-h-[240px] overflow-hidden rounded-[8px]'>
+        <div className='max-w-[327px] md:min-w-[213.33px] xl:min-w-[250.67px] md:min-h-[212px] xl:min-h-[240px] overflow-hidden rounded-[8px]'>
           <img ref={imageRef} loading='lazy' className='object-fill md:object-cover hover:scale-105 transition-transform duration-300 ease-out h-full' src={imageRender()} alt={props.product.name} />
         </div>
         {buttonsRender()}
